@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages="com.example.")
 @EnableFeignClients("com.example.client")
+@EnableCircuitBreaker
+@EnableHystrix
 public class UiPortalApplication {
 
 	public static void main(String[] args) {
