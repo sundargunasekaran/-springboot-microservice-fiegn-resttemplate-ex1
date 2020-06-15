@@ -102,10 +102,17 @@ public class Demo1Controller {
 	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@HystrixCommand(fallbackMethod = "homeFallback")
 	public ModelAndView getAll(@ModelAttribute("customer") CustomerModel customer) {
 		ModelAndView model = new ModelAndView("home");
 		List<CustomerModel> customerList = customerFeignClient.getAllCustomerList();
 		model.addObject("customers",  customerList);
+		return model;
+	}
+	
+	public ModelAndView homeFallback(@ModelAttribute("customer") CustomerModel customer) {
+		ModelAndView model = new ModelAndView("error");
+		model.addObject("messasge",  "Service not available.Please contact administrator!!!");
 		return model;
 	}
 	
